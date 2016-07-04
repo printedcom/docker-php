@@ -1,5 +1,8 @@
 FROM php:7.0.8-fpm
 
+# Install SSL root cert
+ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
+
 RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
@@ -44,18 +47,12 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
     && rm /tmp/memcached.tar.gz
 
 # Install npm bower and gulp
-RUN curl -L https://npmjs.org/install.sh | sh
-RUN npm install bower -g
-RUN npm install gulp -g
-
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/bin/composer
-
-# Install SSL root cert
-ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
-
-RUN update-ca-certificates
+RUN curl -L https://npmjs.org/install.sh | sh \
+    && npm install bower -g \
+    && npm install gulp -g \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/bin/composer \
+    && update-ca-certificates
 
 CMD ["php-fpm", "-F"]
 
