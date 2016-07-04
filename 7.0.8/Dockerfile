@@ -51,6 +51,11 @@ RUN npm install gulp -g
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer
 
+# Install SSL root cert
+ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
+
+RUN update-ca-certificates
+
 CMD ["php-fpm", "-F"]
 
 EXPOSE 9000
