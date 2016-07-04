@@ -1,5 +1,7 @@
 FROM php:7.0.8-fpm
 
+RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y \
 	git \
 	nano \
@@ -15,6 +17,7 @@ RUN apt-get update && apt-get install -y \
 	libpq-dev \
 	libmemcached-dev \
 	libxml2-dev \
+	nodejs nodejs-legacy \
 	g++ zlib1g-dev libicu-dev \
 	&& docker-php-ext-install mcrypt mbstring bz2 zip \
 	&& docker-php-ext-configure gd -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
@@ -39,6 +42,12 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
     && docker-php-ext-install memcached \
     && rm /tmp/memcached.tar.gz
 
+# Install npm bower and gulp
+RUN curl -L https://npmjs.org/install.sh | sh
+RUN npm install bower -g
+RUN npm install gulp -g
+
+# Install composer
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer
 
