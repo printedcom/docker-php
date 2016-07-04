@@ -53,6 +53,7 @@ RUN curl -L https://npmjs.org/install.sh | sh \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer \
     && update-ca-certificates
+    && apt-get autoremove -y
 
 CMD ["php-fpm", "-F"]
 
