@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 	libpng12-dev \
 	libghc-postgresql-libpq-dev \
 	php-pear \
+	libmemcached-dev \
 	&& docker-php-ext-install mcrypt mbstring bz2 zip \
 	&& docker-php-ext-configure gd -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
@@ -26,6 +27,11 @@ RUN pecl install -o -f xdebug \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_connect_back=On" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "memory_limit = 128M" > /usr/local/etc/php/conf.d/php.ini
+
+RUN git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
+    && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
+    && docker-php-ext-configure memcached \
+    && docker-php-ext-install memcached
 
 RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer
