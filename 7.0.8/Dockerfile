@@ -14,12 +14,12 @@ RUN apt-get update && apt-get install -y \
 	php-pear \
 	libpq-dev \
 	libmemcached-dev \
+	libxml2-dev \
+	g++ zlib1g-dev libicu-dev \
 	&& docker-php-ext-install mcrypt mbstring bz2 zip \
-	&& docker-php-ext-install soap \
-	&& docker-php-ext-install intl \
 	&& docker-php-ext-configure gd -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
-	&& docker-php-ext-install gd pgsql pdo_pgsql pdo_mysql \
+	&& docker-php-ext-install gd pgsql pdo_pgsql pdo_mysql soap intl \
 	&& docker-php-ext-enable opcache
 
 RUN pecl install -o -f xdebug \
