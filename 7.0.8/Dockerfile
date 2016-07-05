@@ -52,7 +52,7 @@ RUN curl -L https://npmjs.org/install.sh | sh \
     && npm install gulp -g \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer \
-    && update-ca-certificates
+    && update-ca-certificates \
     && apt-get autoremove -y
 
 CMD ["php-fpm", "-F"]
