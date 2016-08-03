@@ -24,7 +24,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
 	libxml2-dev \
 	nodejs nodejs-legacy \
 	libxslt1-dev \
-	g++ zlib1g-dev libicu-dev
+	g++ zlib1g-dev libicu-dev \
 	&& docker-php-ext-install mcrypt mbstring bz2 zip \
 	&& docker-php-ext-configure gd -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
