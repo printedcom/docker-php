@@ -41,13 +41,13 @@ RUN pecl install -o -f xdebug \
     && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "memory_limit = 128M" > /usr/local/etc/php/conf.d/php.ini
 
-# Install Memcached for php 7
-RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
-    && mkdir -p /usr/src/php/ext/memcached \
-    && tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
-    && docker-php-ext-configure memcached \
-    && docker-php-ext-install memcached \
-    && rm /tmp/memcached.tar.gz
+## Install Memcached for php 7
+#RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
+#    && mkdir -p /usr/src/php/ext/memcached \
+#    && tar -C /usr/src/php/ext/memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
+#    && docker-php-ext-configure memcached \
+#    && docker-php-ext-install memcached \
+#    && rm /tmp/memcached.tar.gz
 
 # Install npm bower and gulp
 RUN curl -L https://npmjs.org/install.sh | sh \
