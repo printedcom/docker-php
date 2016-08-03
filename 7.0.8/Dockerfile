@@ -3,11 +3,13 @@ FROM php:7.0.8-fpm
 # Install SSL root cert
 ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
 
-RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list
-
-RUN apt-get update && apt-get install -y \
+RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y \
 	git \
+	vim \
 	nano \
+	zsh \
 	telnet \
 	bzip2 \
 	libbz2-dev \
@@ -53,7 +55,9 @@ RUN curl -L https://npmjs.org/install.sh | sh \
     && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/bin/composer \
     && update-ca-certificates \
-    && apt-get autoremove -y
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 CMD ["php-fpm", "-F"]
 
