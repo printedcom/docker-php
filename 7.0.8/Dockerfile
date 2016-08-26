@@ -24,9 +24,10 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
 	libxml2-dev \
 	nodejs nodejs-legacy \
 	libxslt1-dev \
+	imagemagick-dev \
 	g++ zlib1g-dev libicu-dev \
 	&& docker-php-ext-install mcrypt mbstring bz2 bcmath zip \
-	&& docker-php-ext-configure gd -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd  -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
 	&& docker-php-ext-install gd pgsql pdo_pgsql pdo_mysql soap intl xsl \
 	&& docker-php-ext-enable opcache
@@ -40,6 +41,11 @@ RUN pecl install -o -f xdebug \
     && echo "xdebug.remote_connect_back=On" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "memory_limit = 128M" > /usr/local/etc/php/conf.d/php.ini
+
+# Install Imagick
+RUN pecl install -o -f imagick \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable imagick
 
 # Install Memcached for php 7
 RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
