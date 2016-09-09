@@ -40,7 +40,8 @@ RUN pecl install -o -f xdebug \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_connect_back=On" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "memory_limit = 128M" > /usr/local/etc/php/conf.d/php.ini
+    && echo "memory_limit = 128M" > /usr/local/etc/php/conf.d/php.ini \
+    && echo "upload_max_filesize = 8M" > /usr/local/etc/php/conf.d/php.ini
 
 # Install imagick
 RUN runtimeRequirements="libmagickwand-6.q16-dev --no-install-recommends" \
