@@ -69,8 +69,12 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
 RUN curl -L https://npmjs.org/install.sh | sh \
     && npm install bower -g \
     && npm install gulp -g \
-    && curl -sS https://getcomposer.org/installer | php \
+
+    # The "v" query parameter forces docker to rebuild this build layer, i.e. it's not something
+    # composer.org interprets. In practice, the latest composer version is always installed.
+    && curl -sS "https://getcomposer.org/installer?v=1.3.0" | php \
     && mv composer.phar /usr/bin/composer \
+
     && update-ca-certificates \
     && apt-get autoremove -y \
     && apt-get clean \
