@@ -72,7 +72,7 @@ RUN curl -L https://npmjs.org/install.sh | sh \
 
     # The "v" query parameter forces docker to rebuild this build layer, i.e. it's not something
     # composer.org interprets. In practice, the latest composer version is always installed.
-    && curl -sS "https://getcomposer.org/installer?v=1.3.0" | php \
+    && curl -sS "https://getcomposer.org/installer?v=1.3.1" | php \
     && mv composer.phar /usr/bin/composer \
 
     && update-ca-certificates \
