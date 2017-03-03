@@ -38,7 +38,7 @@ RUN apt-get update \
     && docker-php-ext-install -j$(nproc) memcached \
 
     # xdebug
-    && pecl install xdebug \
+    && pecl install xdebug-2.5.1 \
     && docker-php-ext-enable xdebug
 
 RUN echo "xdebug.remote_enable=on"  >> /usr/local/etc/php/conf.d/xdebug.ini \
