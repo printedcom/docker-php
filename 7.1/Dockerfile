@@ -1,4 +1,4 @@
-FROM php:7.1-rc-fpm
+FROM php:7.1.3-fpm
 
 # Install SSL root cert
 ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
