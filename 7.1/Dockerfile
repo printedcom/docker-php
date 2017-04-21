@@ -38,7 +38,7 @@ RUN apt-get update \
     && docker-php-ext-install -j$(nproc) memcached \
 
     # xdebug
-    && pecl install xdebug-2.5.1 \
+    && pecl install xdebug-2.5.3 \
     && docker-php-ext-enable xdebug \
     && curl -sS https://cdn.printed.engineering/php/7.1/extensions/lua.so -o /usr/local/lib/php/extensions/no-debug-non-zts-20160303/lua.so \
     && docker-php-ext-enable lua
