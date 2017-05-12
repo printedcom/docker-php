@@ -5,6 +5,15 @@ ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
 
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get update \
+
+    # `pdc-imagemagick`. Provides: `pdc-convert`. This is done so early, because
+    # `apt-get install --fix-broken` may decide to uninstall something for some reason
+    && curl -sS https://cdn.printed.engineering/deb/debian-jessie/pdc-imagemagick_6.9.8.4_amd64.deb -o ~/pdc-imagemagick_6.9.8.4_amd64.deb \
+
+    # `dpkg` will return 1 for the missing dependencies.. or will it? Sadly, there's no other not-annoying way
+    && dpkg -i ~/pdc-imagemagick_6.9.8.4_amd64.deb || true \
+    && apt-get install --fix-broken -y \
+
     && apt-get install -y \
 	git \
 	vim \
