@@ -18,7 +18,6 @@ RUN apt-get update \
 	libmcrypt-dev \
 	libpng12-dev \
 	libghc-postgresql-libpq-dev \
-	php-pear \
 	libpq-dev \
 	libmemcached-dev \
 	libxml2-dev \
@@ -30,13 +29,11 @@ RUN apt-get update \
 	&& docker-php-ext-configure gd  -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
 	&& docker-php-ext-install -j$(nproc) gd iconv mcrypt mbstring pdo pgsql pdo_pgsql zip pdo_mysql soap intl xsl opcache bcmath \
-
     # memcached compilation
     && git clone --branch php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
     && cd /usr/src/php/ext/memcached \
     && docker-php-ext-configure memcached \
     && docker-php-ext-install -j$(nproc) memcached \
-
     # xdebug
     && pecl install xdebug-2.5.3 \
     && docker-php-ext-enable xdebug \
@@ -61,12 +58,10 @@ RUN runtimeRequirements="libmagickwand-6.q16-dev --no-install-recommends" \
 
 # Install bower and gulp
 RUN npm install -g bower gulp \
-
     # The "v" query parameter forces docker to rebuild this build layer, i.e. it's not something
     # composer.org interprets. In practice, the latest composer version is always installed.
     && curl -sS "https://getcomposer.org/installer?v=1.3.1" | php \
     && mv composer.phar /usr/bin/composer \
-
     && update-ca-certificates \
     && apt-get autoremove -y \
     && apt-get clean \
