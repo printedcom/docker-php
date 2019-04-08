@@ -1,4 +1,4 @@
-FROM php:7.1.3-fpm
+FROM php:7.1.27-fpm-stretch
 
 # Install SSL root cert
 ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
@@ -16,7 +16,7 @@ RUN apt-get update \
 	libfreetype6-dev \
 	libjpeg62-turbo-dev \
 	libmcrypt-dev \
-	libpng12-dev \
+	libpng-dev \
 	libghc-postgresql-libpq-dev \
 	libpq-dev \
 	libmemcached-dev \

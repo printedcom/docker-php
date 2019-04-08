@@ -1,4 +1,4 @@
-FROM php:7.0.8-fpm
+FROM php:7.0.32-fpm-stretch
 
 # Install SSL root cert
 ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
@@ -16,7 +16,7 @@ RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >
 	libfreetype6-dev \
 	libjpeg62-turbo-dev \
 	libmcrypt-dev \
-	libpng12-dev \
+	libpng-dev \
 	libghc-postgresql-libpq-dev \
 	php-pear \
 	libpq-dev \
