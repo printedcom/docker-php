@@ -4,30 +4,42 @@ FROM php:7.0.32-fpm-stretch
 ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
 
 RUN echo "deb http://http.us.debian.org/debian/ testing non-free contrib main" >> /etc/apt/sources.list \
-    && apt-get update \
-    && apt-get install -y \
-	git \
-	vim \
-	nano \
-	zsh \
-	telnet \
+    && apt-get update
+
+RUN apt-get install -y \
 	bzip2 \
+	g++ \
+	git \
+	imagemagick \
 	libbz2-dev \
 	libfreetype6-dev \
+	libghc-postgresql-libpq-dev \
+	libicu-dev \
 	libjpeg62-turbo-dev \
 	libmcrypt-dev \
-	libpng-dev \
-	libghc-postgresql-libpq-dev \
-	php-pear \
-	libpq-dev \
 	libmemcached-dev \
+	libnode64 \
+	libpng-dev \
+	libpq-dev \
+	libwebp-dev \
 	libxml2-dev \
-	nodejs nodejs-legacy \
+	libxpm-dev \
 	libxslt1-dev \
-	imagemagick \
-	g++ zlib1g-dev libicu-dev \
-	&& docker-php-ext-install mcrypt mbstring bz2 bcmath zip \
-	&& docker-php-ext-configure gd  -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/ \
+	make \
+	nano \
+	nodejs \
+	pkg-config \
+	telnet \
+	vim \
+	zlib1g-dev \
+	zsh
+
+# @todo this is currently broken: "freetype-config not found"
+# Explanation here: https://bugs.php.net/bug.php?id=76324
+# Possible solution here: https://github.com/elivz/docker-php-dev/blob/master/Dockerfile
+RUN docker-php-ext-configure gd  -with-freetype-dir=/usr/include/ -with-jpeg-dir=/usr/include/
+
+RUN docker-php-ext-install mcrypt mbstring bz2 bcmath zip \
 	&& docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/ \
 	&& docker-php-ext-install gd pgsql pdo_pgsql pdo_mysql soap intl xsl \
 	&& docker-php-ext-enable opcache
