@@ -4,8 +4,11 @@ FROM php:7.1.27-fpm-stretch
 ADD ssl/printed.com-RootCA.crt /usr/local/share/ca-certificates
 
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash -
-RUN apt-get update \
+
+RUN rm -rf /var/lib/apt/lists/* \
+    && apt-get update \
     && apt-get install -y \
+	libghc-postgresql-libpq-dev \
 	git \
 	vim \
 	nano \
@@ -17,7 +20,6 @@ RUN apt-get update \
 	libjpeg62-turbo-dev \
 	libmcrypt-dev \
 	libpng-dev \
-	libghc-postgresql-libpq-dev \
 	libpq-dev \
 	libmemcached-dev \
 	libxml2-dev \
