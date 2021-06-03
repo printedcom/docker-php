@@ -58,6 +58,12 @@ RUN runtimeRequirements="libmagickwand-6.q16-dev --no-install-recommends" \
     && pecl install imagick-3.4.3RC1 \
     && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
 
+# Install APCu and APC backward compatibility
+RUN pecl install apcu \
+    && pecl install apcu_bc-1.0.3 \
+    && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini \
+    && docker-php-ext-enable apc --ini-name 20-docker-php-ext-apc.ini
+
 # Install bower and gulp
 RUN npm install -g bower gulp \
     # The "v" query parameter forces docker to rebuild this build layer, i.e. it's not something
